@@ -2,50 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class Tile2 : MonoBehaviour
 {
-    public static Tile t;
+    public static Tile2 t2;  
     public bool wakable = true;
     public bool current = false;
     public bool target = false;
     public bool selectable = false;
     public bool startfirstmovement;
     private bool playerismoving;
-    public bool changedcolorblue;
-    
+    public bool changedcolorred;
+
     void Start()
     {
-        t = this;
+        t2 = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
         if (current)
         {
             GetComponent<Renderer>().material.color = Color.blue;
         }
-        else if(target)
+        else if (target)
         {
             GetComponent<Renderer>().material.color = Color.green;
         }
-        else if(selectable)
+        else if (selectable)
         {
             GetComponent<Renderer>().material.color = Color.red;
         }
-       
-       
+
+
     }
 
     void OnMouseDown()
     {
-        if(PlayerMOve.p.isplayer2turn == true)
+        if(Player1.p1.isplayer1turn == true)
         {
-            if (PlayerMOve.p.isplayermoving == false)
+            if (Player1.p1.isplayermoving == false)
             {
                 target = true;
-                PlayerMOve.p.Move(gameObject.transform);
+                Player1.p1.Move(gameObject.transform);
                 StartCoroutine(delaytomove());
             }
         }
@@ -55,20 +55,14 @@ public class Tile : MonoBehaviour
 
     IEnumerator delaytomove()
     {
-         
-                              
-        PlayerMOve.p.isplayermoving = true;
-       
-        yield return new WaitForSeconds(1f);        
+        Player1.p1.isplayermoving = true;
+
+        yield return new WaitForSeconds(1f);
         target = false;
-        PlayerMOve.p.isplayermoving = false;
-        PlayerMOve.p.gameObject.transform.position = new Vector3(PlayerMOve.p.targetpos.position.x, PlayerMOve.p.transform.position.y, PlayerMOve.p.targetpos.position.z);
-        PlayerMOve.p.isplayer2turn = false; 
-        Player1.p1.isplayer1turn = true;
-
-
+        Player1.p1.isplayermoving = false;
+        Player1.p1.gameObject.transform.position = new Vector3(Player1.p1.targetpos.position.x, Player1.p1.transform.position.y, Player1.p1.targetpos.position.z);
+        Player1.p1.isplayer1turn = false;
+        PlayerMOve.p.isplayer2turn = true;
     }
-
-
 
 }
