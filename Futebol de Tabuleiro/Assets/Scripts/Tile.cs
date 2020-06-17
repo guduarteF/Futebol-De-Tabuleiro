@@ -11,7 +11,10 @@ public class Tile : MonoBehaviour
     public bool selectable = false;
     public bool startfirstmovement;
     private bool playerismoving;
-    public bool changedcolorblue;
+    public bool selecttile;
+    public bool countableblue, countablered, countablewhite;
+
+    
     
     void Start()
     {
@@ -44,30 +47,24 @@ public class Tile : MonoBehaviour
         {
             if (PlayerMOve.p.isplayermoving == false)
             {
-                target = true;
-                PlayerMOve.p.Move(gameObject.transform);
-                StartCoroutine(delaytomove());
+                
+                if(selectable == true)
+                {
+                    playerismoving = true;
+                    FindObjectOfType<soundManager>().Play("clickp1");
+                    PlayerMOve.p.selecttile = true;
+                    PlayerMOve.p.Move(gameObject.transform);
+                    StartCoroutine(PlayerMOve.p.delaytomove());
+                }
+               
+                
             }
         }
       
 
     }
 
-    IEnumerator delaytomove()
-    {
-         
-                              
-        PlayerMOve.p.isplayermoving = true;
-       
-        yield return new WaitForSeconds(1f);        
-        target = false;
-        PlayerMOve.p.isplayermoving = false;
-        PlayerMOve.p.gameObject.transform.position = new Vector3(PlayerMOve.p.targetpos.position.x, PlayerMOve.p.transform.position.y, PlayerMOve.p.targetpos.position.z);
-        PlayerMOve.p.isplayer2turn = false; 
-        Player1.p1.isplayer1turn = true;
-
-
-    }
+   
 
 
 
